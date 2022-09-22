@@ -39,10 +39,10 @@ client.on('message', async (message) => {
     const content = message.body
 
     if(isBotActive){
-        if(content === 'Привет'){
+        if(content.toLocaleLowerCase === 'привет'){
             client.sendMessage(message.from, `Здравствуйте, ${message._data.notifyName}!`)
         }
-        else if(content === 'Погода'){
+        else if(content.toLowerCase === 'погода'){
             try{
                 const {data: weather} = await axios('https://api.openweathermap.org/data/2.5/weather?q=Astana,kz&APPID=13c2c421aae0c7fb2bd8faa16e75c919&lang=ru&units=metric')
                 message.reply(`Погода в городе ${weather.name}: ${Math.floor(weather.main.temp)}C°, ${weather.weather[0].description}`)
@@ -50,7 +50,7 @@ client.on('message', async (message) => {
                 console.log(e)
             }
         }
-        else if(content === 'meme pls'&&(message.from === '77025128757@c.us' || message.from === '77768290879@c.us')){
+        else if(content.toLowerCase === 'meme pls'&&(message.from === '77025128757@c.us' || message.from === '77768290879@c.us')){
             const meme = await axios("https://meme-api.herokuapp.com/gimme").then(res => res.data)
             client.sendMessage(message.from, await MessageMedia.fromUrl(meme.url))
         }
