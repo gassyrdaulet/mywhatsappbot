@@ -2,7 +2,7 @@ const qrcode = require('qrcode-terminal')
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const axios = require('axios')
 
-const isOnProduction = false
+const isOnProduction = true
 
 console.log("Wait, please. The client is now starting...")
 
