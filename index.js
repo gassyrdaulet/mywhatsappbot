@@ -2,7 +2,7 @@ const qrcode = require('qrcode-terminal')
 const { Client, LocalAuth, MessageMedia } = require('whatsapp-web.js');
 const axios = require('axios')
 
-const isOnProduction = true
+const isOnProduction = false
 
 console.log("Wait, please. The client is now starting...")
 
@@ -42,8 +42,14 @@ client.on('message', async (message) => {
         if(content === 'Привет'){
             client.sendMessage(message.from, `Здравствуйте, ${message._data.notifyName}!`)
         }
-        if(content === 'Погода в Астане'){
-            message.reply('Пока что недоступно, сорри')
+        else if(content === 'Погода'){
+            try{
+                const {data: weather} = await axios('https://api.openweathermap.org/data/2.5/weather?q=Astana,kz&APPID=13c2c421aae0c7fb2bd8faa16e75c919&lang=ru&units=metric')
+                console.log(weather)
+                message.reply(`Погода в городе ${weather.name}: ${Math.floor(weather.main.temp)}C°, ${weather.weather[0].description}`)
+            }catch(e){
+                console.log(e)
+            }
         }
         else if(content === 'meme pls'&&(message.from === '77025128757@c.us' || message.from === '77768290879@c.us')){
             const meme = await axios("https://meme-api.herokuapp.com/gimme").then(res => res.data)
