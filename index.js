@@ -45,7 +45,6 @@ client.on('message', async (message) => {
         else if(content === 'Погода'){
             try{
                 const {data: weather} = await axios('https://api.openweathermap.org/data/2.5/weather?q=Astana,kz&APPID=13c2c421aae0c7fb2bd8faa16e75c919&lang=ru&units=metric')
-                console.log(weather)
                 message.reply(`Погода в городе ${weather.name}: ${Math.floor(weather.main.temp)}C°, ${weather.weather[0].description}`)
             }catch(e){
                 console.log(e)
